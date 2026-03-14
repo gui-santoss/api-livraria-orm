@@ -2,9 +2,10 @@
   "name": "livraria",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "test": "nodemon src/server.js"
+    "dev": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/gui-santoss/api-livraria-orm#readme",
   "dependencies": {
+    "@sequelize/postgres": "^7.0.0-alpha.48",
     "express": "^5.2.1",
     "pg": "^8.19.0",
     "sequelize": "^6.37.7"

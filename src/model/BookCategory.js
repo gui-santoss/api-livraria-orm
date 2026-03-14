@@ -1,22 +1,11 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import { sequelize } from '../config/db';
 
-export const Loan = sequelize.define('Loan', {
+export const BookCategory = sequelize.define('BookCategories', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
-  },
-  loan_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  due_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  return_date: {
-    type: DataTypes.DATE,
   },
   created_at: {
     type: DataTypes.DATE,

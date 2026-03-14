@@ -1,8 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize';
+import { sequelize } from '../config/db';
 
-const sequelize = new Sequelize('pg::memory');
-
-const Fine = sequelize.define('Fine', {
+export const Fine = sequelize.define('Fine', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,

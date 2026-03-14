@@ -1,8 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize';
+import { sequelize } from '../config/db';
 
-const sequelize = new Sequelize('pg::memory');
-
-const Author = sequelize.define('Author', {
+export const Author = sequelize.define('Author', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -23,3 +22,5 @@ const Author = sequelize.define('Author', {
     type: DataTypes.DATE,
   },
 });
+
+module.exports = Author;
