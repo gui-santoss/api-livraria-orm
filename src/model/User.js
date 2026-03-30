@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import { sequelize } from '../../db';
+import { sequelize } from '../config/db.js';
 
 export const User = sequelize.define('User', {
   id: {
@@ -19,12 +19,5 @@ export const User = sequelize.define('User', {
   is_blocked: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
   },
 });

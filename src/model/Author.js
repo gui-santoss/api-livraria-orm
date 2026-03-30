@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import { sequelize } from '../config/db';
+import { sequelize } from '../config/db.js';
 
 export const Author = sequelize.define('Author', {
   id: {
@@ -14,13 +14,4 @@ export const Author = sequelize.define('Author', {
   bio: {
     type: DataTypes.TEXT,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-  },
 });
-
-module.exports = Author;

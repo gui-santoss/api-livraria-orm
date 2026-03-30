@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import { sequelize } from '../config/db';
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../config/db.js';
 
 export const Loan = sequelize.define('Loan', {
   id: {
@@ -16,13 +16,6 @@ export const Loan = sequelize.define('Loan', {
     allowNull: false,
   },
   return_date: {
-    type: DataTypes.DATE,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
     type: DataTypes.DATE,
   },
 });

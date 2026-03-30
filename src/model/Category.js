@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import { sequelize } from '../config/db';
+import { sequelize } from '../config/db.js';
 
 export const Category = sequelize.define('Category', {
   id: {
@@ -10,12 +10,5 @@ export const Category = sequelize.define('Category', {
     type: DataTypes.STRING(100),
     allowNull: false,
     unique: true,
-  },
-  create_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
   },
 });

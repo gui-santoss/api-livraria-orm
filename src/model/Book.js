@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import { sequelize } from '../config/db';
+import { sequelize } from '../config/db.js';
 
 export const Book = sequelize.define('Book', {
   id: {
@@ -25,12 +25,5 @@ export const Book = sequelize.define('Book', {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 1,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
   },
 });
