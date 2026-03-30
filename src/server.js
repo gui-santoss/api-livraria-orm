@@ -3,10 +3,11 @@ import bodyparser from 'body-parser';
 import { sequelize } from './config/db.js';
 import { User } from './model/User.js';
 import userRoutes from './routes/user.routes.js';
+import 'dotenv/config';
 
 const app = express();
 
-const port = 3000;
+const port = process.env.APP_PORT;
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
