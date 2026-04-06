@@ -3,6 +3,7 @@ import bodyparser from 'body-parser';
 import { sequelize } from './config/db.js';
 import { User } from './model/User.js';
 import userRoutes from './routes/user.routes.js';
+import authorRoutes from './routes/author.routes.js';
 import 'dotenv/config';
 
 const app = express();
@@ -23,6 +24,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use('/users', userRoutes);
+app.use('/authors', authorRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
