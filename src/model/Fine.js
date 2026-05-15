@@ -11,10 +11,6 @@ export const Fine = sequelize.define('Fine', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  paid: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
   paid_at: {
     type: DataTypes.DATE,
   },

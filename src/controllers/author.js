@@ -1,99 +1,102 @@
 import { Author } from '../model/Author.js';
+import { Op } from 'sequelize';
 
-export const getAllAuthors = (req, res, next) => {
-  Author.findAll()
-    .then((authors) => {
-      res.status(200).json({ author: authors });
-    })
-    .catch((err) => res.status(500).json({ message: err }));
+export const getAllAuthors = async (req, res) => {
+  const { name } = req.query;
+
+  const where = {};
+
+  if (name) {
+    where.name = { [Op.iLike]: `%${name}%` };
+  }
+
+  try {
+    const authors = await Author.findAll({ where });
+
+    res.status(200).json(authors);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 };
 
-export const getAuthor = (req, res, next) => {
+export const getAuthor = async (req, res, next) => {
   const { authorId } = req.params;
 
-  Author.findByPk(authorId)
-    .then((author) => {
-      if (!author) {
-        return res.status(404).json({ message: 'Author not found' });
-      }
-      res.status(200).json({ author: author });
-    })
-    .catch((err) => res.status(500).json({ message: err }));
+  try {
+    const author = await Author.findByPk(authorId);
+
+    if (!author) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
+    res.status(200).json(author);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 };
 
-export const createAuthor = (req, res, next) => {
+export const createAuthor = async (req, res, next) => {
   const { name, bio } = req.body;
 
   if (!name) {
-    res.status(400).send({
+    return res.status(400).send({
       message: 'Name is required.',
     });
   }
   if (!bio) {
-    res.status(400).send({
+    return res.status(400).send({
       message: 'Bio is required.',
     });
   }
 
-  Author.create({
-    name: name,
-    bio: bio,
-  })
-    .then((result) => {
-      res.status(201).json({
-        message: 'Author created successfuly!',
-        user: result,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const author = await Author.create({ name, bio });
+
+    res.status(201).json(author);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 };
 
-export const updateAuthor = (req, res, next) => {
+export const updateAuthor = async (req, res, next) => {
   const { authorId } = req.params;
-  const { name, bio } = req.params;
+  const { name, bio } = req.body;
 
   if (!name) {
-    res.status(400).json({ message: 'Name is required.' });
+    return res.status(400).json({ message: 'Name is required.' });
   }
   if (!bio) {
-    res.status(400).json({ message: 'Bio is required.' });
+    return res.status(400).json({ message: 'Bio is required.' });
   }
 
-  Author.findByPk(authorId)
-    .then((author) => {
-      if (!author) {
-        return res.status(404).json({ message: 'Author not found.' });
-      }
-      author.name = name;
-      author.bio = bio;
-      return author.save();
-    })
-    .then((result) => {
-      if (!result) return;
-      res.status(200).json({ message: 'Author updated!', author: result });
-    })
-    .catch((err) => console.log(err));
+  try {
+    const author = await Author.findByPk(authorId);
+
+    if (!author) {
+      return res.status(404).json({ message: 'Author not found.' });
+    }
+
+    Object.assign(author, { name, bio });
+
+    const updatedAuthor = await author.save();
+
+    res.status(200).json(updatedAuthor);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 };
 
 export const deleteAuthor = async (req, res, next) => {
   const { authorId } = req.params;
 
-  Author.findByPk(authorId)
-    .then((author) => {
-      if (!author) {
-        return res.status(404).json({ message: 'Author not found!' });
-      }
-      return Author.destroy({
-        where: {
-          id: authorId,
-        },
-      });
-    })
-    .then((result) => {
-      if (!result) return;
-      res.status(200).json({ message: 'Author deleted!' });
-    })
-    .catch((err) => console.log(err));
+  try {
+    const author = await Author.findByPk(authorId);
+    if (!author) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
+
+    await author.destroy();
+    res.status(200).json({ message: 'Author deleted!' });
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 };

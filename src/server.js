@@ -1,10 +1,14 @@
 import express from 'express';
 import bodyparser from 'body-parser';
 import { sequelize } from './config/db.js';
-import { User } from './model/User.js';
-import userRoutes from './routes/user.routes.js';
-import authorRoutes from './routes/author.routes.js';
+import userRoutes from './routes/user.js';
+import authorRoutes from './routes/author.js';
+import categoryRoutes from './routes/category.js';
+import bookRoutes from './routes/book.js';
+import loanRoutes from './routes/loan.js';
+import './model/index.js';
 import 'dotenv/config';
+import './jobs/fineJob.js';
 
 const app = express();
 
@@ -25,6 +29,9 @@ app.get('/', (req, res, next) => {
 
 app.use('/users', userRoutes);
 app.use('/authors', authorRoutes);
+app.use('/categories', categoryRoutes);
+app.use('/books', bookRoutes);
+app.use('/loans', loanRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);

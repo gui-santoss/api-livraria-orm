@@ -55,9 +55,9 @@ export const createUser = async (req, res, next) => {
   }
 
   try {
-    const existingUser = await User.findOne({ where: { email } });
+    const existing_user = await User.findOne({ where: { email } });
 
-    if (existingUser) {
+    if (existing_user) {
       return res.status(409).send({ message: 'Email already in use.' });
     }
 
@@ -99,7 +99,7 @@ export const updateUser = async (req, res, next) => {
     const user = await User.findByPk(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found.' });
     }
 
     Object.assign(user, { name, email, is_blocked });

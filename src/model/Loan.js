@@ -17,5 +17,6 @@ export const Loan = sequelize.define('Loan', {
   },
   return_date: {
     type: DataTypes.DATE,
+    allowNull: true,
   },
 });

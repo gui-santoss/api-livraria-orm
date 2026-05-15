@@ -1,10 +1,10 @@
-import Book from './Book.js';
-import Author from './Author.js';
-import Loan from './Loan.js';
-import User from './User.js';
-import Fine from './Fine.js';
-import BookCategory from './BookCategory.js';
-import Category from './Category.js';
+import { Book } from './Book.js';
+import { Author } from './Author.js';
+import { Loan } from './Loan.js';
+import { User } from './User.js';
+import { Fine } from './Fine.js';
+import { BookCategory } from './BookCategory.js';
+import { Category } from './Category.js';
 
 /*******************************
  *                           ****
@@ -23,28 +23,40 @@ import Category from './Category.js';
 // Books FKs
 Author.hasMany(Book, {
   foreignKey: {
-    name: 'authorId',
+    name: 'author_id',
     allowNull: false,
   },
 });
-Book.belongsTo(Author);
+Book.belongsTo(Author, {
+  foreignKey: {
+    name: 'author_id',
+  },
+});
 
 // Loans FKs
 User.hasMany(Loan, {
   foreignKey: {
-    name: 'loanId',
+    name: 'user_id',
     allowNull: false,
   },
 });
-Loan.belongsTo(User);
+Loan.belongsTo(User, {
+  foreignKey: {
+    name: 'user_id',
+  },
+});
 
 Book.hasMany(Loan, {
   foreignKey: {
-    name: 'bookId',
+    name: 'book_id',
     allowNull: false,
   },
 });
-Loan.belongsTo(Book);
+Loan.belongsTo(Book, {
+  foreignKey: {
+    name: 'book_id',
+  },
+});
 
 /*******************************
  ********************************
@@ -57,11 +69,16 @@ Loan.belongsTo(Book);
 // Fines FKs
 Loan.hasOne(Fine, {
   foreignKey: {
-    name: 'loanId',
+    name: 'loan_id',
     allowNull: false,
   },
+  as: 'fine',
 });
-Fine.belongsTo(Loan);
+Fine.belongsTo(Loan, {
+  foreignKey: {
+    name: 'loan_id',
+  },
+});
 
 /*******************************
  ********************************
@@ -72,5 +89,13 @@ Fine.belongsTo(Loan);
  ********************************/
 
 // BookCategory FKs
-Book.belongsToMany(Category, { through: BookCategory });
-Category.belongsToMany(Book, { through: BookCategory });
+Book.belongsToMany(Category, {
+  through: BookCategory,
+  foreignKey: 'book_id',
+  as: 'category',
+});
+
+Category.belongsToMany(Book, {
+  through: BookCategory,
+  foreignKey: 'category_id',
+});
