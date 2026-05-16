@@ -3,6 +3,7 @@ import { Fine } from '../model/Fine';
 import { Loan } from '../model/Loan';
 import 'dotenv/config';
 import { Op } from 'sequelize';
+import logger from '../config/logger';
 
 cron.schedule('0 6 * * *', async () => {
   const current_date = new Date();
@@ -42,6 +43,6 @@ cron.schedule('0 6 * * *', async () => {
       }
     }
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 });

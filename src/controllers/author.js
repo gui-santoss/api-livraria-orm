@@ -1,5 +1,6 @@
 import { Author } from '../model/Author.js';
 import { Op } from 'sequelize';
+import logger from '../config/logger.js';
 
 export const getAllAuthors = async (req, res) => {
   const { name } = req.query;
@@ -15,7 +16,8 @@ export const getAllAuthors = async (req, res) => {
 
     res.status(200).json(authors);
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -30,7 +32,8 @@ export const getAuthor = async (req, res, next) => {
     }
     res.status(200).json(author);
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -53,7 +56,8 @@ export const createAuthor = async (req, res, next) => {
 
     res.status(201).json(author);
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -81,7 +85,8 @@ export const updateAuthor = async (req, res, next) => {
 
     res.status(200).json(updatedAuthor);
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -97,6 +102,7 @@ export const deleteAuthor = async (req, res, next) => {
     await author.destroy();
     res.status(200).json({ message: 'Author deleted!' });
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };

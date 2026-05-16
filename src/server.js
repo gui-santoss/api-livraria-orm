@@ -9,6 +9,7 @@ import loanRoutes from './routes/loan.js';
 import './model/index.js';
 import 'dotenv/config';
 import './jobs/fineJob.js';
+import logger from './config/logger.js';
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.use('/books', bookRoutes);
 app.use('/loans', loanRoutes);
 
 app.use((error, req, res, next) => {
-  console.log(error);
+  logger.error(error);
   const status = error.statusCode || 500;
   const message = error.message;
   res.status(status).json({ message: message });
@@ -43,9 +44,9 @@ app.use((error, req, res, next) => {
 sequelize
   .sync()
   .then((result) => {
-    console.log('Database connected');
+    logger.info('Database connected');
     app.listen(port, '0.0.0.0', () => {
-      console.log(`Server running on port ${port}`);
+      logger.info(`Server running on port ${port}`);
     });
   })
-  .catch((err) => console.log(err));
+  .catch((err) => logger.error(err));

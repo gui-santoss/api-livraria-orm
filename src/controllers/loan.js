@@ -3,6 +3,7 @@ import { Book } from '../model/Book.js';
 import { User } from '../model/User.js';
 import { Fine } from '../model/Fine.js';
 import { sequelize } from '../config/db.js';
+import logger from '../config/logger.js';
 
 export const getAllLoans = async (req, res) => {
   try {
@@ -17,7 +18,8 @@ export const getAllLoans = async (req, res) => {
     });
     res.status(200).json({ loans });
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -41,7 +43,8 @@ export const getLoan = async (req, res) => {
 
     res.status(200).json(loan);
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -99,7 +102,8 @@ export const createLoan = async (req, res) => {
     res.status(201).json(loan);
   } catch (err) {
     await t.rollback();
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -144,6 +148,7 @@ export const returnLoan = async (req, res) => {
     res.status(200).json({ message: 'Book returned!', loan });
   } catch (err) {
     await t.rollback();
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };

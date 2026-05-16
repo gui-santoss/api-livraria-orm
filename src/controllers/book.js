@@ -2,6 +2,7 @@ import { Book } from '../model/Book';
 import { Author } from '../model/Author';
 import { Category } from '../model/Category';
 import { Op } from 'sequelize';
+import logger from '../config/logger.js';
 
 export const getAllBooks = async (req, res) => {
   const { name } = req.query;
@@ -27,7 +28,8 @@ export const getAllBooks = async (req, res) => {
 
     res.status(200).json({ books });
   } catch (err) {
-    res.status(500).json({ error: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -51,7 +53,8 @@ export const getBook = async (req, res) => {
 
     res.status(200).json(book);
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -113,7 +116,8 @@ export const createBook = async (req, res) => {
 
     res.status(201).json(book);
   } catch (err) {
-    res.status(500).json({ message: err });
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
