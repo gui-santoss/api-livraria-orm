@@ -22,19 +22,11 @@ cron.schedule('0 6 * * *', async () => {
 
       const final_fine_value = fine_value * diffDias;
 
-      const where = {};
+      const existing_fine = await Fine.findOne({ where: { loan_id: loan.id } });
 
-      where.loan_id = { [Op.is]: loan.id };
-
-      const existing_fine = await Fine.findAll({ where });
-
-      if (existing_fine.length > 0) {
-        const fine = existing_fine[0];
-        Object.assign(fine, {
-          amount: final_fine_value,
-        });
-
-        await fine.save();
+      if (existing_fine) {
+        Object.assign(existing_fine, { amount: final_fine_value });
+        await existing_fine.save();
       } else {
         await Fine.create({
           loan_id: loan.id,

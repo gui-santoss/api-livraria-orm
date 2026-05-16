@@ -76,7 +76,11 @@ export const createBook = async (req, res) => {
   if (!stock_total) {
     return res
       .status(400)
-      .json({ message: 'Is required to inform de quantity in stock.' });
+      .json({ message: 'Stock quantity is required.' });
+  }
+
+  if (!categories_id || !Array.isArray(categories_id) || categories_id.length === 0) {
+    return res.status(400).json({ message: 'Categories must be a non-empty array.' });
   }
 
   const stock_available = stock_total;
@@ -137,17 +141,21 @@ export const updateBook = async (req, res) => {
   if (!stock_total) {
     return res
       .status(400)
-      .json({ message: 'Is required to inform de quantity in stock.' });
+      .json({ message: 'Stock quantity is required.' });
   }
 
   if (!stock_available) {
     return res
       .status(400)
-      .json({ message: 'Is required to inform de quantity available.' });
+      .json({ message: 'Available quantity is required.' });
   }
 
   if (!author_id) {
     return res.status(400).json({ message: 'Author is required.' });
+  }
+
+  if (!categories_id || !Array.isArray(categories_id) || categories_id.length === 0) {
+    return res.status(400).json({ message: 'Categories must be a non-empty array.' });
   }
 
   try {
@@ -165,7 +173,7 @@ export const updateBook = async (req, res) => {
 
     const existing_book = await Book.findOne({ where: { isbn } });
 
-    if (existing_book && existing_book.id != book_id) {
+    if (existing_book && existing_book.id !== parseInt(book_id)) {
       return res.status(409).json({ message: 'ISBN already in use.' });
     }
 
@@ -193,6 +201,7 @@ export const updateBook = async (req, res) => {
 
     res.status(200).json({ message: 'Book updated!', updatedBook });
   } catch (err) {
-    return res.status(500).json({ message: err });
+    logger.error(err);
+    return res.status(500).json({ message: 'Internal server error.' });
   }
 };

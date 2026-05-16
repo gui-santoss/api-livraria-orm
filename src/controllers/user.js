@@ -42,18 +42,18 @@ export const createUser = async (req, res, next) => {
   const { name, email, is_blocked } = req.body;
 
   if (!name) {
-    return res.status(400).send({
+    return res.status(400).json({
       message: 'Name is required.',
     });
   }
   if (!email) {
-    return res.status(400).send({
+    return res.status(400).json({
       message: 'Email is required.',
     });
   }
   if (is_blocked === undefined) {
-    return res.status(400).send({
-      message: 'It`s required to indicate if the user is blocked.',
+    return res.status(400).json({
+      message: "It's required to indicate if the user is blocked.",
     });
   }
 
@@ -61,12 +61,12 @@ export const createUser = async (req, res, next) => {
     const existing_user = await User.findOne({ where: { email } });
 
     if (existing_user) {
-      return res.status(409).send({ message: 'Email already in use.' });
+      return res.status(409).json({ message: 'Email already in use.' });
     }
 
     const user = await User.create({ name, email, is_blocked });
 
-    res.status(201).json({ message: 'User created succefully!', user });
+    res.status(201).json({ message: 'User created successfully!', user });
   } catch (err) {
     logger.error(err);
     res.status(500).json({ message: 'Internal server error.' });
@@ -78,18 +78,18 @@ export const updateUser = async (req, res, next) => {
   const { name, email, is_blocked } = req.body;
 
   if (!name) {
-    return res.status(400).send({
+    return res.status(400).json({
       message: 'Name is required',
     });
   }
   if (!email) {
-    return res.status(400).send({
+    return res.status(400).json({
       message: 'Email is required',
     });
   }
   if (is_blocked === undefined) {
-    return res.status(400).send({
-      message: 'It`s required to indicate if the user is blocked',
+    return res.status(400).json({
+      message: "It's required to indicate if the user is blocked.",
     });
   }
 
@@ -97,7 +97,7 @@ export const updateUser = async (req, res, next) => {
     const existingUser = await User.findOne({ where: { email } });
 
     if (existingUser && existingUser.id !== parseInt(userId)) {
-      return res.status(409).send({ message: 'Email already in use.' });
+      return res.status(409).json({ message: 'Email already in use.' });
     }
 
     const user = await User.findByPk(userId);

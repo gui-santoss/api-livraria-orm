@@ -130,6 +130,10 @@ export const returnLoan = async (req, res) => {
     }
 
     const book = await Book.findByPk(loan.book_id);
+    if (!book) {
+      await t.rollback();
+      return res.status(404).json({ message: 'Book not found.' });
+    }
 
     loan.return_date = return_date;
     await loan.save({ transaction: t });

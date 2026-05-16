@@ -56,7 +56,7 @@ export const createCategory = async (req, res) => {
 
     const category = await Category.create({ name });
 
-    res.status(201).json({ message: 'Category created succefully!', category });
+    res.status(201).json({ message: 'Category created successfully!', category });
   } catch (err) {
     logger.error(err);
     res.status(500).json({ message: 'Internal server error.' });
