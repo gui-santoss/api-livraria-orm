@@ -1,4 +1,4 @@
-import { Category } from '../model/Category';
+import { Category } from '../model/Category.js';
 import { Op } from 'sequelize';
 import logger from '../config/logger.js';
 
@@ -56,7 +56,9 @@ export const createCategory = async (req, res) => {
 
     const category = await Category.create({ name });
 
-    res.status(201).json({ message: 'Category created successfully!', category });
+    res
+      .status(201)
+      .json({ message: 'Category created successfully!', category });
   } catch (err) {
     logger.error(err);
     res.status(500).json({ message: 'Internal server error.' });

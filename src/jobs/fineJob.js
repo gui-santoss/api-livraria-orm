@@ -1,9 +1,9 @@
 import cron from 'node-cron';
-import { Fine } from '../model/Fine';
-import { Loan } from '../model/Loan';
+import { Fine } from '../model/Fine.js';
+import { Loan } from '../model/Loan.js';
 import 'dotenv/config';
 import { Op } from 'sequelize';
-import logger from '../config/logger';
+import logger from '../config/logger.js';
 
 cron.schedule('0 6 * * *', async () => {
   const current_date = new Date();

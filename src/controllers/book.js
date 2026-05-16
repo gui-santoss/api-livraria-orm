@@ -1,6 +1,6 @@
-import { Book } from '../model/Book';
-import { Author } from '../model/Author';
-import { Category } from '../model/Category';
+import { Book } from '../model/Book.js';
+import { Author } from '../model/Author.js';
+import { Category } from '../model/Category.js';
 import { Op } from 'sequelize';
 import logger from '../config/logger.js';
 
@@ -74,13 +74,17 @@ export const createBook = async (req, res) => {
   }
 
   if (!stock_total) {
-    return res
-      .status(400)
-      .json({ message: 'Stock quantity is required.' });
+    return res.status(400).json({ message: 'Stock quantity is required.' });
   }
 
-  if (!categories_id || !Array.isArray(categories_id) || categories_id.length === 0) {
-    return res.status(400).json({ message: 'Categories must be a non-empty array.' });
+  if (
+    !categories_id ||
+    !Array.isArray(categories_id) ||
+    categories_id.length === 0
+  ) {
+    return res
+      .status(400)
+      .json({ message: 'Categories must be a non-empty array.' });
   }
 
   const stock_available = stock_total;
@@ -139,23 +143,25 @@ export const updateBook = async (req, res) => {
   }
 
   if (!stock_total) {
-    return res
-      .status(400)
-      .json({ message: 'Stock quantity is required.' });
+    return res.status(400).json({ message: 'Stock quantity is required.' });
   }
 
   if (!stock_available) {
-    return res
-      .status(400)
-      .json({ message: 'Available quantity is required.' });
+    return res.status(400).json({ message: 'Available quantity is required.' });
   }
 
   if (!author_id) {
     return res.status(400).json({ message: 'Author is required.' });
   }
 
-  if (!categories_id || !Array.isArray(categories_id) || categories_id.length === 0) {
-    return res.status(400).json({ message: 'Categories must be a non-empty array.' });
+  if (
+    !categories_id ||
+    !Array.isArray(categories_id) ||
+    categories_id.length === 0
+  ) {
+    return res
+      .status(400)
+      .json({ message: 'Categories must be a non-empty array.' });
   }
 
   try {

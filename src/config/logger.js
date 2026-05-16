@@ -7,10 +7,10 @@ const logger = winston.createLogger({
   format: winston.format.json(),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
     new winston.transports.DailyRotateFile({
       level: process.env.LOG_LEVEL || 'info',
-      filename: 'combined.log',
+      filename: 'logs/combined.log',
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
       maxSize: '20m',
