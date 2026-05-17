@@ -1,6 +1,6 @@
 import cron from 'node-cron';
-import { Fine } from '../model/Fine.js';
-import { Loan } from '../model/Loan.js';
+import { Fine } from '../model/Fine.model.js';
+import { Loan } from '../model/Loan.model.js';
 import 'dotenv/config';
 import { Op } from 'sequelize';
 import logger from '../config/logger.js';

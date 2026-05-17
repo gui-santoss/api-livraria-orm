@@ -1,11 +1,11 @@
 import express from 'express';
 import bodyparser from 'body-parser';
 import { sequelize } from './config/db.js';
-import userRoutes from './routes/user.js';
-import authorRoutes from './routes/author.js';
-import categoryRoutes from './routes/category.js';
-import bookRoutes from './routes/book.js';
-import loanRoutes from './routes/loan.js';
+import userRoutes from './routes/user.routes.js';
+import authorRoutes from './routes/author.routes.js';
+import categoryRoutes from './routes/category.routes.js';
+import bookRoutes from './routes/book.routes.js';
+import loanRoutes from './routes/loan.routes.js';
 import './model/index.js';
 import 'dotenv/config';
 import './jobs/fineJob.js';

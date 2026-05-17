@@ -1,10 +1,10 @@
-import { Book } from './Book.js';
-import { Author } from './Author.js';
-import { Loan } from './Loan.js';
-import { User } from './User.js';
-import { Fine } from './Fine.js';
-import { BookCategory } from './BookCategory.js';
-import { Category } from './Category.js';
+import { Book } from './Book.model.js';
+import { Author } from './Author.model.js';
+import { Loan } from './Loan.model.js';
+import { User } from './User.model.js';
+import { Fine } from './Fine.model.js';
+import { BookCategory } from './BookCategory.model.js';
+import { Category } from './Category.model.js';
 
 /*******************************
  *                           ****
